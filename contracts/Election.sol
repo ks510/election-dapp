@@ -1,6 +1,6 @@
-pragma solidity ^0.4.11;
+pragma solidity ^0.4.25;
 
-contract Electrion {
+contract Election {
   // Store candidate
   // Read candidate
   string public candidate;
