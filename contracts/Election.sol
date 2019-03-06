@@ -18,8 +18,8 @@ contract Election {
     addCandidate("Candidate 2");
   }
 
-  function addCandidate (String _name) private {
-    candidateCount++;
-    candidates[candidateCount] = Candidate(candidatesCount, _name, 0);
+  function addCandidate(string _name) private {
+    candidatesCount++;
+    candidates[candidatesCount] = Candidate(candidatesCount, _name, 0);
   }
 }
