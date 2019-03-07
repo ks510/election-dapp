@@ -1,4 +1,11 @@
 # Election Dapp
-Frontend: HTML, CSS, JS
-Backend: Ethereum, Solidity, Smart Contracts, Blockchain
-Truffle, Ganache
+## Dependencies
+* npm
+* Truffle: https://truffleframework.com/
+* Ganache: https://truffleframework.com/ganache
+
+## Fronted
+* HTML, CSS, JS
+
+## Backend
+* Ethereum, Solidity, Smart Contracts, Blockchain
