@@ -3,8 +3,9 @@
 * npm
 * Truffle: https://truffleframework.com/
 * Ganache: https://truffleframework.com/ganache
+* Metamask (Chrome extension)
 
-## Fronted
+## Frontend
 * HTML, CSS, JS
 
 ## Backend
