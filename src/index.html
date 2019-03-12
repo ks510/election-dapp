@@ -21,13 +21,14 @@
     <div class="container" style="width: 650px;">
       <div class="row">
         <div class="col-lg-12">
-          <h1 class="text-center">Election Results</h1>
+          <h1 class="text-center">Election Results</h1> <!-- heading on page -->
           <hr/>
           <br/>
-          <div id="loader">
+          <div id="loader"> <!-- loader template for asynchronous calls (contract functions) -->
             <p class="text-center">Loading...</p>
           </div>
           <div id="content" style="display: none;">
+            <!-- display table of candidates and their vote count -->
             <table class="table">
               <thead>
                 <tr>
@@ -40,6 +41,7 @@
               </tbody>
             </table>
             <hr/>
+            <!-- shows address of current account connected to the app -->
             <p id="accountAddress" class="text-center"></p>
           </div>
         </div>
