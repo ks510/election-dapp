@@ -1,6 +1,8 @@
 var Election = artifacts.require("./Election.sol");
 
 contract("Election", function (accounts) {
+  var electionInstance; //all tests will have access to this
+
   it("initializes with two candidates", function() { //description of test
     return Election.deployed().then(function(instance) { //fetch contract instance
       return instance.candidatesCount(); //callback functon gets contract attribute
