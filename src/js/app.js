@@ -2,6 +2,7 @@ App = { //client app is an object initialized whenever the client loads the wind
   web3Provider: null,
   contracts: {},
   account: '0x0',
+  hasVoted: false,
 
   // initialise the app and web3
   init: function() {
@@ -68,6 +69,9 @@ App = { //client app is an object initialized whenever the client loads the wind
     }).then(function(candidatesCount) {
       var candidatesResults = $("#candidatesResults");
       candidatesResults.empty();
+      // query for candidateSelect inside the vote form and reset it
+      var candidatesSelect = $('#candidatesSelect');
+      candidatesSelect.empty();
 
       // iterate through candidates mapping to get each candidates' values
       for (var i = 1; i <= candidatesCount; i++) {
@@ -80,15 +84,40 @@ App = { //client app is an object initialized whenever the client loads the wind
           // Render candidate Result
           var candidateTemplate = "<tr><th>" + id + "</th><td>" + name + "</td><td>" + voteCount + "</td></tr>"
           candidatesResults.append(candidateTemplate);
+
+          // Render candidate ballot option
+          var candidateOption = "<option value='" + id + "' >" + name + "</ option>"
+          candidatesSelect.append(candidateOption);
         });
       }
-      // all asynchronous calls are done, loading finish and content ready to display
+      return electionInstance.voters(App.account); // check if account has voted already
+    }).then(function(hasVoted) {
+      // Do not allow a user to vote by hiding the form
+      if(hasVoted) {
+        $('form').hide();
+      }
+      // all asynchronous calls done, show data
       loader.hide();
       content.show();
     }).catch(function(error) {
       console.warn(error);
     });
+  },
+
+  // called by form onSubmit
+  castVote: function() {
+    var candidateId = $('#candidatesSelect').val(); // query for candidate id from selector
+    App.contracts.Election.deployed().then(function(instance) { // get instance of contract
+      return instance.vote(candidateId, { from: App.account }); // call vote function and pass in account
+    }).then(function(result) {
+      // Wait for votes to update
+      $("#content").hide();
+      $("#loader").show();
+    }).catch(function(err) {
+      console.error(err);
+    });
   }
+
 };
 
 $(function() {
