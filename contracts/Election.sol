@@ -16,7 +16,7 @@ contract Election {
 
   // voted event
   event votedEvent (
-    uint _candidateId;
+    uint _candidateId
   );
 
   constructor () public {
@@ -36,6 +36,6 @@ contract Election {
     voters[msg.sender] = true; // record that account has voted
     candidates[_candidateId].voteCount++; // get candidate and update candidate vote count
 
-    votedEvent(_candidateId); //trigger event to notify frontend
+    emit votedEvent(_candidateId); //trigger event to notify frontend
   }
 }
