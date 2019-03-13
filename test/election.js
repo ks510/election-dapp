@@ -27,4 +27,20 @@ contract("Election", function (accounts) {
     });
   });
 
+  it("allows a voter to cast a vote and record voter", function() {
+    return Election.deployed().then(function(instance) {
+      electionInstance = instance;
+      candidateId = 1; // candidate id to vote for
+      return electionInstance.vote(1, {from: accounts[0]}); // cast vote with first ganache account
+    }).then(function(receipt) {
+      return electionInstance.voters(accounts[0]);
+    }).then(function(voted) {
+      assert(voted, "the voter was marked as voted"); // check the account was recorded
+      return electionInstance.candidates(candidateId);
+    }).then(function(candidate) {
+      var voteCount = candidate[2]; // get voteCount attribute
+      assert(voteCount, 1, "candidate's vote count was incremented"); // check vote count was increased to 1
+    })
+  })
+
 });
