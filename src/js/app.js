@@ -36,8 +36,25 @@ App = { //client app is an object initialized whenever the client loads the wind
       App.contracts.Election = TruffleContract(election);
       // Connect provider to interact with contract
       App.contracts.Election.setProvider(App.web3Provider);
+      // listen for events from contract
+      App.listenForEvents();
 
       return App.render();
+    });
+  },
+  // Listen for events emitted from the contract
+  listenForEvents: function() {
+    App.contracts.Election.deployed().then(function(instance) {
+      // Restart Chrome if you are unable to receive this event, known issue with Metamask
+      // call votedEvent to subscribe (listen) to it
+      instance.votedEvent({}, { // pass metadata
+        fromBlock: 0,   // subscribe to events from entire block chain (0 to latest block)
+        toBlock: 'latest'
+      }).watch(function(error, event) {
+        console.log("event triggered", event); // log event
+        // Reload when a new vote is recorded
+        App.render();
+      });
     });
   },
 
